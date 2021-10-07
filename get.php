@@ -28,9 +28,11 @@ foreach ($file_content as $key => $value) {
     //抓取页面
     $page_content = curl_request($value, true);
     //匹配信息
-    preg_match_all("/\"playurl\":\"(.*).m4a/", $page_content, $preg_array);
-    //拼接媒体地址
-    $m4a_url = $preg_array[1][0] . ".m4a";
+    // preg_match_all("/\"playurl\":\"(.*).m4a(.*)\"/", $page_content, $preg_array);
+    // preg_match_all("/\"playurl\":\".*.m4a.*\",\"playurl_video/", $page_content, $preg_array);
+    preg_match("/playurl\":\"(.*?)\"/", $page_content, $preg_array);
+    //媒体地址
+    $m4a_url = $preg_array[1];
     //获取媒体
     $m4a_content = curl_request($m4a_url, true);
     //拼接文件地址
